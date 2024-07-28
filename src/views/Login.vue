@@ -1,10 +1,20 @@
 <script setup lang="ts">
-// --- Vue Imports ---
-import { ref } from "vue";
 // --- VeeValidate Imports ---
 import { useForm } from "vee-validate";
 // --- Import Form Schema ---
 import { schema, defaultLoginValues } from "../form-schema/login";
+// --- Import Services ---
+import { login } from "../services/login";
+// --- Router Import ---
+import { useRouter } from "vue-router";
+// --- Toast Import ---
+import { useToast } from "primevue/usetoast";
+
+//NOTE - Router
+const router = useRouter();
+
+//NOTE - Toast
+const toast = useToast();
 
 //NOTE - Create Form
 const { defineField, handleSubmit, errors } = useForm({
@@ -18,7 +28,28 @@ const [password] = defineField("Password");
 
 //NOTE- On Submit
 const submitHandler = handleSubmit((values) => {
-  console.log(values);
+  login(values)
+    .then((response) => {
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Login Successful Redirecting to Home Page",
+        life: 3000,
+      });
+
+      //NOTE - Redirect to Home Page 30ms after successful login
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
+    })
+    .catch((error) => {
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Login Failed",
+        life: 3000,
+      });
+    });
 });
 </script>
 
@@ -27,6 +58,7 @@ const submitHandler = handleSubmit((values) => {
     <div
       class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
     >
+      <Toast />
       <div class="flex flex-column align-items-center justify-content-center">
         <div
           style="
