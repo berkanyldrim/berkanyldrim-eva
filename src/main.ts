@@ -6,6 +6,8 @@ import App from "./App.vue";
 import store from "./store";
 // --- Router Import ---
 import router from "./router";
+// --- HighCharts Import ---
+import HighchartsVue from "highcharts-vue";
 // --- PrimeVue Import ---
 import PrimeVue from "primevue/config";
 import "primevue/resources/themes/aura-dark-blue/theme.css";
@@ -16,13 +18,18 @@ import "primeicons/primeicons.css";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Password from "primevue/password";
+import ToastService from "primevue/toastservice";
+import Toast from "primevue/toast";
 
 const app = createApp(App);
 app.use(PrimeVue, { ripple: true });
 
 app.use(router);
 app.use(store);
+app.use(HighchartsVue);
+app.use(ToastService);
 app.mount("#app");
 app.component("Button", Button);
 app.component("InputText", InputText);
 app.component("Password", Password);
+app.component("Toast", Toast);

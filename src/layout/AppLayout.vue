@@ -7,13 +7,6 @@
       <!-- Başlık alanı, navbar vb. -->
       <h1>My App</h1>
     </header>
-    <aside class="layout-sidebar">
-      <!-- Sidebar, menü öğeleri vb. -->
-      <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/about">About</router-link></li>
-      </ul>
-    </aside>
     <main class="layout-content">
       <router-view />
     </main>

@@ -11,6 +11,7 @@
   "dependencies": {
     "@primevue/themes": "^4.0.2",
     "axios": "^1.7.2",
+    "highcharts-vue": "^2.0.1",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primevue": "^3.5.2",
