@@ -1,32 +1,46 @@
-import { reactive, toRefs } from "vue";
 import { Commit } from "vuex";
+import { IUser } from "@/types/user";
 
-interface UserState {
-  name: string;
-  email: string;
-}
-
-const state = reactive<UserState>({
-  name: "",
+const getDefaultState = (): IUser => ({
+  firstName: "",
+  lastName: "",
   email: "",
+  countryCode: "",
+  callingCode: "",
+  telephoneNumber: "",
+  isAdmin: "",
+  store: [
+    {
+      storeName: "",
+      storeId: "",
+      evaStoreId: "",
+      storeType: 0,
+      region: "",
+      paidStatus: 0,
+      pricingStatus: 0,
+      paidDate: "",
+      reimbursementPackageTrialEndDate: "",
+      linkedDate: "",
+      marketplaceName: "",
+      marketplaceCode: "",
+      enableRepricing: false,
+    },
+  ],
 });
 
+const state = getDefaultState();
+
 const mutations = {
-  setUser(state: UserState, user: { name: string; email: string }) {
-    state.name = user.name;
-    state.email = user.email;
+  setUser(state: IUser, user: IUser) {
+    Object.assign(state, user);
   },
-  clearUser(state: UserState) {
-    state.name = "";
-    state.email = "";
+  clearUser(state: IUser) {
+    Object.assign(state, getDefaultState());
   },
 };
 
 const actions = {
-  fetchUser(
-    { commit }: { commit: Commit },
-    user: { name: string; email: string }
-  ) {
+  fetchUser({ commit }: { commit: Commit }, user: IUser) {
     commit("setUser", user);
   },
   clearUser({ commit }: { commit: Commit }) {
@@ -35,12 +49,11 @@ const actions = {
 };
 
 const getters = {
-  userName: (state: UserState) => state.name,
-  userEmail: (state: UserState) => state.email,
+  user: (state: IUser) => state,
 };
 
 export default {
-  state: toRefs(state),
+  state,
   mutations,
   actions,
   getters,
