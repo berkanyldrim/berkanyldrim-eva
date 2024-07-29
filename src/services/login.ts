@@ -10,11 +10,12 @@ export const login = async (values: ILogin) => {
     .post("oauth/token", values)
     .then((response) => {
       if (response.status === 200) {
-        console.log(response.data.Data);
         const tokenData = {
           token: response.data.Data.AccessToken,
           refreshToken: response.data.Data.RefreshToken,
+          email: values.Email,
         };
+        localStorage.setItem("token", tokenData.token);
         store.dispatch("auth/login", tokenData);
         return response;
       }
