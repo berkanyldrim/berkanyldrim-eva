@@ -28,8 +28,21 @@ app.use(router);
 app.use(store);
 app.use(HighchartsVue);
 app.use(ToastService);
-app.mount("#app");
 app.component("Button", Button);
 app.component("InputText", InputText);
 app.component("Password", Password);
 app.component("Toast", Toast);
+
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = store.getters["auth/isAuthenticated"];
+    if (to.name !== 'login' &&  !isAuthenticated) {
+        next({ name: 'login' });
+    } else if (to.name === 'login' && isAuthenticated) {
+        next({ name: 'home' });
+    } else {
+        next();
+    }
+});
+
+app.mount("#app");

@@ -1,16 +1,15 @@
 // --- Axios Import ---
 import axios from "axios";
 // --- Store Import ---
-import authStore from "../store/modules/auth";
+import store from "../store/index";
 
 //NOTE - Axios Default Url
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
+const token = store.getters["auth/token"];
 axios.interceptors.request.use(function (config) {
   if (config.url != "oauth/token") {
-    config.headers["Authorization"] = `Bearer ${
-      authStore?.getters && authStore.getters.token
-    }`;
+     config.headers["Authorization"] = `Bearer ${token}`;
   }
   return config;
 });
